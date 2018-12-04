@@ -2,6 +2,8 @@ const rp = require("request-promise");
 const hb = require("handlebars");
 const moment = require("moment");
 
+const debug = require("debug")(__filename);
+
 // https://dev.fitbit.com/build/reference/web-api/heart-rate/
 
 export default class HeartRateAPIController {
@@ -9,7 +11,7 @@ export default class HeartRateAPIController {
     constructor(args={}) {
         // handle authentication and such
         this.bearerToken = args.bearerToken;
-        console.log("BEARER TOKEN", this.bearerToken);
+        debug("BEARER TOKEN", this.bearerToken);
     }
 
     static getHeartRateUrl(args) {
@@ -27,7 +29,7 @@ export default class HeartRateAPIController {
             }
         };
 
-        console.log(options);
+        debug("request options", options);
         var response = rp(options).then(data => {
             return JSON.parse(data);
         });
@@ -45,11 +47,10 @@ export default class HeartRateAPIController {
         };
 
         var heartRateData = await this.fetch(args);
-        console.log("heartrate data", heartRateData);
+        //console.log(heartRateData);
         var heartRateTimeSeries = heartRateData["activities-heart-intraday"].dataset;
-        console.log("heartrate heartRateTimeSeries", heartRateTimeSeries);
         var latestHeartRateMeasurement = heartRateTimeSeries[heartRateTimeSeries.length - 1];
-        console.log("latest heart rate measurement", latestHeartRateMeasurement);
+        debug("latest heart rate measurement", latestHeartRateMeasurement);
 
         var todaysDate = moment().format("YYYY-MM-DD");
         var measurementTimeAsMoment = moment(todaysDate + "T" + latestHeartRateMeasurement.time)
