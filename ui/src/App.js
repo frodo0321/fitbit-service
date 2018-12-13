@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios";
 
-//import Heart1 from "./Heart1";
-//import Heart2 from "./Heart2";
 import beatingHeart from "./beating-heart.gif";
 
 import './App.css';
-
-console.log("betingHEart", beatingHeart);
-console.log("betingHEart", typeof(beatingHeart));
-console.log("betingHEart", beatingHeart);
 
 class App extends Component {
 
