@@ -13,7 +13,11 @@ console.clear();
 
 const app = express();
 
-require("./routes")(app);
+app.use("/api", require("./routes"));
+
+app.use(express.static("public"));
+//const reverseProxy = require("node-tools/lib/middleware/reverse-proxy")
+//app.use(reverseProxy("http://localhost:3000"))
 
 
 app.use(function errorHandler(error, request, response, next) {
