@@ -14,25 +14,29 @@ console.clear();
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+const router = express.Router();
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(requestLogger());
+router.use(requestLogger());
 
-app.use("/api/v0", require("./routes"));
+router.use("/api/v0", require("./routes"));
 
-app.use(express.static("public"));
+router.use(express.static("public"));
 //const reverseProxy = require("node-tools/lib/middleware/reverse-proxy")
-//app.use(reverseProxy("http://localhost:3000"))
+//router.use(reverseProxy("http://localhost:3000"))
 
 
-app.use(function errorHandler(error, request, response, next) {
+router.use(function errorHandler(error, request, response, next) {
     console.error("error", _.pick(error, ["name", "message", "error"]));
     return response.json(_.pick(error, ["name", "message", "error"]));
 })
 
+const basePath = process.env.BASE_PATH || "/";
+app.use(basePath, router);
 
 var PORT = 8000
 app.listen(PORT, function() {
