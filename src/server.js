@@ -1,3 +1,4 @@
+const requestLogger = require("node-tools/lib/middleware/request-logger");
 const _ = require("lodash");
 const bluebird = require("bluebird");
 const bodyParser = require("body-parser");
@@ -13,7 +14,14 @@ console.clear();
 
 const app = express();
 
-app.use("/api", require("./routes"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(requestLogger());
+
+app.use("/api/v0", require("./routes"));
 
 app.use(express.static("public"));
 //const reverseProxy = require("node-tools/lib/middleware/reverse-proxy")
