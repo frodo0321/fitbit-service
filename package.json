@@ -19,7 +19,7 @@
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
     "mongodb": "^3.1.10",
-    "node-tools": "git@github.com:tylerhaun/node-tools",
+    "node-tools": "https://github.com/tylerhaun/node-tools",
     "ramda": "^0.26.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
